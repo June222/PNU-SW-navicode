@@ -1,9 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.navicode">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <application
         android:label="navicode"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
+        <meta-data  android:name="com.google.android.geo.API_KEY"
+                    android:value="AIzaSyBW_C5knXCAibfmdNPcy0H5jvs0d_fj3h8"/>
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,4 +38,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    
 </manifest>

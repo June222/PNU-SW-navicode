@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Naivcode',
+      debugShowCheckedModeBanner: false, // Debug Banner 제거
       theme: ThemeData(
         textTheme: const TextTheme(),
         colorScheme: ColorScheme.fromSeed(
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomeScreen(title: ""),
+      // home: const MyHomeScreen(title: ""),
     );
   }
 }
