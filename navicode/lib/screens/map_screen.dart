@@ -18,13 +18,13 @@ class _MapScreenState extends State<MapScreen> {
   late GoogleMapController _googleMapController;
   String _currentAddress = "Fetching location ...";
   Position? _initialPosition;
-
+  int _currentIndex = 0;
   final LatLng _defaultLatLng = const LatLng(35.234108, 129.080073);
 
   double _latitude = 35.234108;
   double _longitude = 129.080073;
 
-  Set<Marker> markers = {};
+  final Set<Marker> _markers = {};
 
   @override
   void initState() {
@@ -83,6 +83,41 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  void _onMapCreated(GoogleMapController controller) {
+    _googleMapController = controller;
+  }
+
+  void _onMapTapped(LatLng position) {
+    final String markerId = position.toString();
+
+    if (_markers.any((marker) => marker.markerId.value == markerId)) {
+      setState(() {
+        _markers.removeWhere((marker) => marker.markerId.value == markerId);
+      });
+      return;
+    }
+
+    setState(() {
+      _markers.add(
+        Marker(
+          markerId: MarkerId(markerId),
+          position: position,
+          onTap: () {
+            _onMarkerTapped(markerId);
+          },
+        ),
+      );
+    });
+  }
+
+  void _onMarkerTapped(String markerId) {
+    setState(() {
+      _markers.removeWhere((marker) => marker.markerId.value == markerId);
+    });
+    _googleMapController
+        .moveCamera(CameraUpdate.newLatLng(LatLng(_latitude, _longitude)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -105,9 +140,7 @@ class _MapScreenState extends State<MapScreen> {
               // 같은 부모 같은 깊이에 있는 flexible 끼리 비율을 나누어 가짐
               flex: 1,
               child: GoogleMap(
-                onMapCreated: (controller) {
-                  _googleMapController = controller;
-                },
+                onMapCreated: _onMapCreated,
                 initialCameraPosition: CameraPosition(
                   target: _initialPosition != null
                       ? LatLng(_initialPosition!.latitude,
@@ -115,7 +148,9 @@ class _MapScreenState extends State<MapScreen> {
                       : _defaultLatLng,
                   zoom: 15,
                 ),
+                markers: _markers,
                 onTap: (latlng) {
+                  _onMapTapped(latlng);
                   _latitude = latlng.latitude;
                   _longitude = latlng.longitude;
                   log("$_latitude, $_longitude");
@@ -174,6 +209,27 @@ class _MapScreenState extends State<MapScreen> {
                 ),
               ),
             ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          // 하단 바
+
+          currentIndex: _currentIndex,
+          onTap: (selectedIndex) => setState(() {
+            _currentIndex = selectedIndex;
+            if (_currentIndex == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MapScreen(),
+                ),
+              );
+            }
+          }),
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.note), label: "Code"),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Login"),
           ],
         ),
       ),
