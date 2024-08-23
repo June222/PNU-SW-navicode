@@ -20,13 +20,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Naivcode',
+      debugShowCheckedModeBanner: false, // Debug Banner 제거
       theme: ThemeData(
         textTheme: const TextTheme(),
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromRGBO(253, 203, 157, 1)),
         useMaterial3: true,
       ),
+
       home: const LoginScreen(),
+
       // home: const MyHomeScreen(title: ""),
     );
   }
