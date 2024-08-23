@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:navicode/screens/map_screen.dart';
+import 'package:navicode/widgets/search_field.dart';
 
 class MyHomeScreen extends StatefulWidget {
   const MyHomeScreen({super.key, required this.title});
@@ -57,21 +59,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                     "검색하세요",
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.white,
-                    ),
-                    child: TextField(
-                      focusNode: _focusNode,
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.search),
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          suffixIcon: Icon(Icons.cancel_outlined)),
-                    ),
-                  ),
+                  SearchField(focusNode: _focusNode),
                   Align(
                     // 정렬 widget
                     alignment: Alignment.center,
@@ -144,6 +132,14 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
           currentIndex: _currentIndex,
           onTap: (selectedIndex) => setState(() {
             _currentIndex = selectedIndex;
+            if (_currentIndex == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MapScreen(),
+                ),
+              );
+            }
           }),
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.note), label: "Code"),
