@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "52618738218",
+    "firebase_url": "https://navicode-f8d6b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "navicode-f8d6b",
+    "storage_bucket": "navicode-f8d6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52618738218:android:80524fdd70041fa858e153",
+        "android_client_info": {
+          "package_name": "com.example.navicode"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA504yOr4s3unvzO8S_6iSofx13uaQ0jso"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
